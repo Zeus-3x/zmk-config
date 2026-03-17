@@ -28,6 +28,22 @@
         };
     };
 
+    behaviors {
+        rgb_hue: rgb_hue {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "RGB_HUE";
+            #sensor-binding-cells = <0>;
+            bindings = <&rgb_ug RGB_HUI>, <&rgb_ug RGB_HUD>;
+        };
+
+        rgb_brightness: rgb_brightness {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "RGB_BRIGHTNESS";
+            #sensor-binding-cells = <0>;
+            bindings = <&rgb_ug RGB_BRI>, <&rgb_ug RGB_BRD>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -42,11 +58,11 @@
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
             bindings = <
-&kp GRAVE         &kp N1  &kp N2    &kp N3    &kp N4        &kp N5                               &kp N6     &kp N7          &kp N8     &kp N9    &kp N0    &none
-&kp TAB           &kp Q   &kp W     &kp E     &kp R         &kp T                                &kp Y      &kp U           &kp I      &kp O     &kp P     &kp BSPC
-&kp LEFT_SHIFT    &kp A   &kp S     &kp D     &kp F         &kp G                                &kp H      &kp J           &kp K      &kp L     &kp SEMI  &kp SINGLE_QUOTE
-&kp LEFT_CONTROL  &kp Z   &kp X     &kp C     &kp V         &kp B      &kp C_MUTE    &bl BL_TOG  &kp N      &kp M           &kp COMMA  &kp DOT   &kp FSLH  &kp ENTER
-                          &kp LGUI  &kp LALT  &kp CAPSLOCK  &kp SPACE  &mo 1         &mo 2       &kp SPACE  &studio_unlock  &kp RALT   &kp RGUI
+&kp GRAVE         &kp N1  &kp N2    &kp N3    &kp N4        &kp N5                                    &kp N6     &kp N7          &kp N8     &kp N9    &kp N0    &none
+&kp TAB           &kp Q   &kp W     &kp E     &kp R         &kp T                                     &kp Y      &kp U           &kp I      &kp O     &kp P     &kp BSPC
+&kp LEFT_SHIFT    &kp A   &kp S     &kp D     &kp F         &kp G                                     &kp H      &kp J           &kp K      &kp L     &kp SEMI  &kp SINGLE_QUOTE
+&kp LEFT_CONTROL  &kp Z   &kp X     &kp C     &kp V         &kp B      &kp C_MUTE    &rgb_ug RGB_TOG  &kp N      &kp M           &kp COMMA  &kp DOT   &kp FSLH  &kp ENTER
+                          &kp LGUI  &kp LALT  &kp CAPSLOCK  &kp SPACE  &mo 1         &mo 2            &kp SPACE  &studio_unlock  &kp RALT   &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -71,7 +87,7 @@
                       &trans     &trans    &trans    &trans     &trans        &trans  &trans     &trans    &trans     &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>, <&rgb_hue>;
         };
 
         raise_layer {
@@ -92,7 +108,9 @@
                           &trans        &trans        &trans        &trans        &trans    &trans  &trans     &trans    &trans    &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings =
+                <&inc_dec_kp C_VOL_UP C_VOL_DN>,
+                <&rgb_brightness>;
         };
 
         adjust_layer {
